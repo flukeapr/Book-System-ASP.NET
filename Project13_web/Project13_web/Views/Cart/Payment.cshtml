@@ -1,0 +1,181 @@
+﻿@using Project13_web.Models
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <style>
+        body {
+            margin-top: 80px;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        .topic {
+            display: flex;
+            justify-content: center;
+            margin: 10px;
+        }
+
+        .payment ul li {
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+            .payment ul li img {
+                display: flex;
+                align-items: center;
+            }
+
+        .transport {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        ul li h2 {
+            margin-left: 10px;
+        }
+
+        .detail {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .button {
+            display: flex;
+            justify-content: end;
+        }
+
+        .div-transport {
+            border: 2px solid #000000;
+            border-radius: 20px;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="topic">
+        <h1>ช่องทางการชำระเงิน</h1>
+    </div>
+    @using (Html.BeginForm("Payment", "Cart", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+    {
+        <div class="detail">
+            <div class="payment">
+                <ul>
+                    <li>
+                        <div class="div-transport">
+                            <input type="radio" id="transport" name="payment-method" value="ชำระเงินปลายทาง" />
+                            <h2>ชำระเงินปลายทาง</h2>
+                            <img src="~/Content/Payment/transport.png" class="transport" />
+                        </div>
+
+                    </li>
+
+                    <li>
+                        <div class="div-transport">
+                            <input type="radio" id="debit" name="payment-method" value="บัตรเครดิต/บัตรเดบิต" />
+                            <h2>บัตรเครดิต/บัตรเดบิต</h2>
+                            <img src="~/Content/Payment/debit 1.png" class="debit" />
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="div-transport">
+                            <input type="radio" id="true money" name="payment-method" value="ชำระผ่าน True-Wallet" />
+                            <h2>ชำระผ่าน True-Wallet</h2>
+                            <img src="~/Content/Payment/true money.png" class="true-money" />
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="div-transport">
+                            <input type="radio" id="qr" name="payment-method" value="สแกน QR พร้อมเพย์" />
+                            <h2>สแกน QR พร้อมเพย์</h2>
+                            <img src="~/Content/Payment/qr.png" class="qr" />
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="div-transport">
+                            <input type="radio" id="pay-pal" name="payment-method" value="ชำระผ่าน Pay-pal" />
+                            <h2>ชำระผ่าน Pay-pal</h2>
+                            <img src="~/Content/Payment/pay-pal.png" class="pay-pal" />
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </div>
+            <div class="order-detail">
+                <div class="order">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th>รูปหนังสือ</th>
+                            <th>ชื่อหนังสือ</th>
+                            <th>ราคาต่อชิ้น</th>
+                            <th>จำนวน</th>
+                            <th>ราคาทั้งหมด</th>
+
+                        </tr>
+                        @foreach (var item in ViewBag.Cart)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/Content/Book_Image/@item.Book.Image" alt="@item.Book.Book_Name" style="width:100px;height: auto" />
+                                </td>
+                                <td>@item.Book.Book_Name</td>
+                                <td>@item.Book.Price</td>
+                                <td>@item.Quanity</td>
+                                <td>฿@(item.Book.Price * item.Quanity)</td>
+
+
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="4"> <h2 class="text-center">ราคาสิ้นค้าทั้งหมด</h2></td>
+                            <td>
+                                @{
+                                    List<Item> cart = (List<Item>)Session["cart"];
+                                    var total = (from data in cart
+                                                 select data.Book.Price * data.Quanity).Sum();
+                                }
+                                <h3>฿@total</h3>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="detail-cus" style="display:flex; flex-direction:column; margin:10px;">
+                    <label>ชื่อผู้รับ</label>
+                    <input type="text" name="recive" />
+                    <label>เบอร์โทรศัพท์</label>
+                    <input type="tel" name="tel" />
+                    <label>ที่อยู่</label>
+                    <textarea name="address" rows="10" cols="50" style=" resize: none;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="button">
+            <button class="btn" style="background-color: white; border-radius: 10px; border: 1px solid #5B584F; color: #3F3F3F; font-weight: bold;">
+                @Html.ActionLink("ย้อนกลับ", "Index", null, new { style = "color: black;  text-decoration: none;" })
+            </button>
+            <input type="submit" value="สั่งซื้อ" class="btn btn-warning" style="border-radius: 10px; border: 1px solid #5B584F; font-weight:bold; width:100px;" />
+            @*<a href="@Url.Action("Payment")" class="btn btn-warning" style="border-radius: 10px; border: 1px solid #5B584F; font-weight:bold; width:100px;">สั่งซื้อ</a>*@
+        </div>
+    }
+</body>
+</html>

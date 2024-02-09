@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+        .navbar-fixed-top {
+            background: #5B584F;
+        }
+
+
+
+        .search {
+            display: flex;
+            position: absolute;
+            top: 30%;
+            left: 40%;
+            align-items: center;
+        }
+
+            .search input {
+                border-radius: 10px;
+                width: 300px;
+                height: 40px;
+                border: none;
+            }
+
+            .search button {
+                height: 40px;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+            }
+
+        .chat {
+            position: sticky;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+
+            .chat button {
+                display: flex;
+                align-items: center;
+                width: 80px;
+                height: 80px;
+                border: none;
+                border-radius: 100%;
+                background-color: #93A78C;
+            }
+
+        .chat-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 400px;
+            height: 500px;
+            background-color: #F6EDDB;
+            border-radius: 20px;
+        }
+
+        .chat-head {
+            flex: 0 0 60px;
+            width: 400px;
+            height: 60px;
+            background-color: #7F7F7F;
+            color: white;
+            border-radius: 20px 20px 0 0;
+        }
+
+            .chat-head h2 {
+                display: flex;
+                justify-content: center;
+            }
+
+        .chat-bootom {
+            display: flex;
+            flex: 0 0 60px;
+            width: 400px;
+            height: 60px;
+            background-color: #5B584F;
+            border-radius: 0 0 20px 20px;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+            .chat-bootom img {
+                cursor: pointer;
+            }
+
+        div.panel-body {
+            overflow: scroll;
+            background: url('http://subtlepatterns.com/patterns/geometry2.png');
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <div class="logo">
+                    <a href="@Url.Action("Index", "Home")">
+                        <img src="~/Content/Logo/Logo.png" alt="Logo" />
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-collapse collapse">
+
+                @if (ViewBag.HideElement != true)
+                {
+                    using ((Html.BeginForm()))
+                    {
+
+                        <div class="search ">
+                            @Html.TextBox("SearchString", null, new { @placeholder = "ค้นหาหนังสือ" })
+                            <button type="submit" value="Search"><box-icon name='search' color='#ffffff'></box-icon></button>
+                        </div>
+
+                    }
+                }
+
+                <ul>
+                    @Html.Partial("_LoginPartial")
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+
+
+    </div>
+    @if (ViewBag.HideElement != true)
+    {
+        <div class="chat navbar-fixed-bottom">
+            <button type="submit" id="chatButton">
+                <img src="~/Content/Logo/chat-icon.png" />
+
+            </button>
+            <div id="chatPopup" style="display: none;">
+
+
+                <div class="chat-content" id="chatContent">
+                    <div class="chat-head">
+                        <h2 id="title"></h2>
+                    </div>
+                    <div class="chat-body">
+                        <div class="chat-panel panel panel-default">
+                            <div class="panel-heading">
+                                อยากได้หนังสือหรอ เราพร้อมเเนะนำ อยากอ่านหนังสือหรอ เราพร้อมเเชร์
+                                <i class="fa fa-paper-plane fa-fw"></i>
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body" id="chat" style="height:250px;">
+                                <input type="hidden" id="displayname" />
+
+                                <p id="discussion"></p>
+                            </div>
+                            <!-- /.panel-body -->
+                            <div class="panel-footer">
+                                <div class="input-group">
+                                    <input id="message" type="text" name="message" class="form-control input-sm" placeholder="Type your message here..." />
+
+                                    <span class="input-group-btn">
+                                        <input type="button" class="btn btn-warning btn-sm" id="sendmessage" value="Send">
+
+                                    </span>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="chat-bootom ">
+                        <img id="community" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAU1JREFUWEftl9ERgjAQRPc60U7oRKlE7EQr0U6kk8gxyCRHEi4YBGeSL2YIucfuBTaEnQ3aGQ/+F8gYcwFwBnDIpGrbrXUDcCcivu6HSqEBpskEIpdpiOiaCmRWguFlWyI6JgHlgjHGsN0naX2n0OiUyrJcQJ91ZAvsAYiVeo02xRRaoYH73WQ3LoN0dca+DCq0AoztNkPVlm0qIJYx13dGtp6zm7QKeam/aepQ4QI01ytFoaKQducpdln45xp6WFvcN08BFI4fGwA5MJOA9kugkOpO/ChAHpmkQrGfq+O3lf7UWduOGVrL+GQRKjACLYwpkwb2QUmFvJl3eJBB7wAeiRHFG9BUCslJQokngErM4WI1EfG9LCMa8iPWJL11CukSICeKphTTzE0Bym7PbFMHeojP85NTg+Ztl8yZU6jK2bAawE1OrjGwAjRn2xu2A/wl5Ia2dwAAAABJRU5ErkJggg==" />
+                        <img id="admin" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAAAXNSR0IArs4c6QAAAZhJREFUWEft2O1tAjEMBuB4E9iknaRlktJJSicpm7SbGF4UR7lLfPlwIp1Q86sSOXiwndiU3M4W7czjng/EzAfn3JeP9ImI/ixRN0XIY34jADCvFlQ3KIMRlwnVBVIiAxDSh9WNagYpmJNH/FhRTSANQ0RXhMW/bkJVg0oYKSArqgpUixmBKoJaMVbUJqgXY0GpICumF5UFjcL0oBKQcgOjHTyOdu+qbTMLkNYOiKhY/DVQZubVvuRGX4PQKOX6D89OBD3aDBEd5cN2D0J03rz2HNRzUibv/x2PK1vHPuQ7Tpmvs0OpyHP74hrSyqAatOpRi7znCpqZpR5RuJgkrzNBMFyICGNHspgZHf9lnfKhID9evEfzswxin34WQiRQf4AEjB9pZTzJlkH8japTFt26H/e/Q8EX7p9FFIdHqBF1vhcuohfWNJBPn1wRkiL5+XNxzi2OcvRFxqespkVoe6ZGqAf2dKBso+2JTOYZ9WLdOvYtx7vVmZzAbLdfvysz458IOEXJSNIqiParGOwZMngZcMmj/6BSNG9y2Ds0rvXf5AAAAABJRU5ErkJggg==" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+    <script src="~/Scripts/Chat-Js/Chat.js"></script>
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the chat page and send messages.-->
+    <script src="~/Scripts/Chat-Js/OpenChat.js"></script>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

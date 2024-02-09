@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Project13_mobile.ViewModels"
+             x:Class="Project13_mobile.View.BookDetail">
+    <ContentPage.BindingContext>
+        <local:BookViewModel></local:BookViewModel>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+
+            <Image Source="{Binding selectBook.Image}" HeightRequest="200" WidthRequest="200"/>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="{Binding selectBook.Book_Name}" FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" Grid.Row="0"   Grid.ColumnSpan="3" />
+
+                <Label Text="ผู้แต่ง" FontSize="Medium" Grid.Row="1"  Grid.Column="0" FontAttributes="Bold"></Label>
+                <Label Text="{Binding selectBook.Author}" FontSize="Large" HorizontalOptions="CenterAndExpand" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                <Label Text="สำนักพิมพ์" FontSize="Medium" Grid.Row="2"  Grid.Column="0" FontAttributes="Bold"></Label>
+                <Label Text="{Binding selectBook.Publisher}" FontSize="Large"  HorizontalOptions="CenterAndExpand"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+                <Label Text="ราคา" FontSize="Medium" Grid.Row="3"  Grid.Column="0" FontAttributes="Bold"></Label>
+                <Label Text="{Binding selectBook.Price}" FontSize="Large" TextColor="Red" HorizontalOptions="CenterAndExpand"  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"/>
+
+                <Button Text="แก้ไข" BackgroundColor="#ECB552" CornerRadius="10" TextColor="White" FontSize="Small" Grid.Row="4"  Grid.Column="1" Command="{Binding EditCommand}"></Button>
+                <Button  Text="ลบหนังสือ" BackgroundColor="Red" CornerRadius="10" TextColor="White" FontSize="Small" Grid.Row="4"  Grid.Column="2" Command="{Binding DeleteCommand}"></Button>
+               
+
+            </Grid>
+
+            
+
+
+
+            <Button Text="ย้อนกลับ" Command="{Binding BackCommand}" CornerRadius="10" BackgroundColor="#D1C4A2"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

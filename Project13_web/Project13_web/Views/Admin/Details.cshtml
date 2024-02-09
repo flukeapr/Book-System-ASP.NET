@@ -1,0 +1,127 @@
+﻿@model Project13_web.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <style>
+
+        body {
+            margin: 50px;
+        }
+
+        .topic {
+            display: flex;
+            justify-content: center;
+            margin: 30px;
+        }
+
+            .topic h1 {
+                font-weight: bold;
+            }
+
+        .book {
+            display: grid;
+            grid-template-columns: 1.5fr 1.5fr;
+        }
+
+        .image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .detail h3 {
+            color: #82AC26;
+            margin-left: 5px;
+        }
+
+        .cap {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+
+        .test {
+            width: 200px;
+            height: 70px;
+            border: 2px solid #336359;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+            .test h2 {
+                text-align: center;
+                color: #19B86C;
+                background-color: transparent;
+            }
+
+        .buy {
+            width: 300px;
+            height: 70px;
+            border: 2px solid #1E1E1E;
+            border-radius: 30px;
+            text-align: center;
+            background-color: #F7CD81;
+        }
+
+            .buy h2 {
+                text-align: center;
+                color: black;
+            }
+    </style>
+</head>
+<body>
+    <div class="topic">
+        <h1>@Html.DisplayFor(model => model.Book_Name)</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="book">
+
+            <div class="image">
+                <img src=@Url.Content("~/Content/Book_Image/"+(Model.Image)) style="width:380px;height: auto" />
+            </div>
+            <div class="detail">
+                <div class="cap">
+                    <h2>@Html.DisplayNameFor(model => model.Category)</h2>
+                    <h3> @Html.DisplayFor(model => model.Category)</h3>
+                </div>
+
+                <div class="cap">
+                    <h2>@Html.DisplayNameFor(model => model.Author)</h2>
+                    <h3>@Html.DisplayFor(model => model.Author)</h3>
+                </div>
+                <div class="cap">
+                    <h2> @Html.DisplayNameFor(model => model.Publisher)</h2>
+                    <h3>@Html.DisplayFor(model => model.Publisher)</h3>
+                </div>
+                <div class="cap">
+                    <h2> @Html.DisplayNameFor(model => model.Price)</h2>
+                    <h3>@Html.DisplayFor(model => model.Price) ฿</h3>
+                </div>
+
+                <h2> @Html.DisplayNameFor(model => model.Short_Story)</h2>
+                <label>@Html.DisplayFor(model => model.Short_Story)</label>
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-warning">
+            @Html.ActionLink("Back to List", "Index", null, new { style = "color: white; text-decoration: none;" })
+        </button>
+
+    </div>
+</body>
+</html>

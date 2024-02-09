@@ -1,0 +1,336 @@
+﻿@model IEnumerable<Project13_web.Models.Book>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        .carousel {
+            width: 50%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+            .carousel img {
+                width: 100%;
+                height: auto;
+            }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            margin-top: 70px;
+        }
+
+        .section-book {
+            margin: 30px 0 30px 0;
+            display: flex;
+            justify-content: center;
+            align-content: space-around;
+        }
+
+        .book, .e-book, .promotion, .sale-book {
+            position: relative;
+            margin-left: 10px;
+            width: 270px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-image: url('~/Content/Section/book-section.jpeg');
+            overflow: hidden;
+            color: white;
+            border-radius: 10px;
+        }
+
+            .book .image-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1;
+            }
+
+                .book .image-container img {
+                    width: 270px;
+                    height: 100px;
+                    opacity: 0.3;
+                }
+
+            .e-book .image-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1;
+            }
+
+                .e-book .image-container img {
+                    width: 270px;
+                    height: 100px;
+                    opacity: 0.3;
+                }
+
+            .promotion .image-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1;
+            }
+
+                .promotion .image-container img {
+                    width: 270px;
+                    height: 100px;
+                    opacity: 0.3;
+                }
+
+            .sale-book .image-container {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 1;
+            }
+
+                .sale-book .image-container img {
+                    width: 270px;
+                    height: 100px;
+                    opacity: 0.3;
+                }
+
+        .book {
+            background-color: rgba(186, 80, 130);
+        }
+
+        .e-book {
+            background-color: rgba(54, 134, 201);
+        }
+
+        .promotion {
+            background-color: rgba(130, 172, 38);
+        }
+
+        .sale-book {
+            background-color: rgba(75, 0, 130);
+        }
+
+        .book h1 {
+            text-align: center;
+            z-index: 2;
+            font-size: 32px;
+            color: white;
+            position: relative;
+        }
+
+        .e-book h1 {
+            text-align: center;
+            z-index: 2;
+            font-size: 32px;
+            color: white;
+            position: relative;
+        }
+
+        .promotion h1 {
+            text-align: center;
+            z-index: 2;
+            font-size: 32px;
+            color: white;
+            position: relative;
+        }
+
+        .sale-book h1 {
+            text-align: center;
+            z-index: 2;
+            font-size: 32px;
+            color: white;
+            position: relative;
+        }
+
+        .img-responsive {
+            filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .btn {
+            text-decoration: none;
+        }
+
+        .thumbnail:hover {
+            filter: drop-shadow(0px 0px 8px rgba(91, 88, 79, 0.5));
+        }
+
+        .section-book {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <!-- โฆษณาสไลด์ -->
+        <div class="carousel-container">
+            <img src="~/Content/Advert/Halloween_Sale.jpg" alt="Image 1">
+            <img src="~/Content/Advert/Christmas_Sale.jpg" alt="Image 2">
+            <img src="~/Content/Advert/Valentine_Sale.jpg" alt="Image 3">
+        </div>
+    </div>
+
+
+    <section class="section-book">
+        <!-- กล่องข้างล่าง 4 อัน -->
+        <div class="book" onclick="Cartoon()">
+            <div class="image-container">
+                <img src="~/Content/Section/book-section.jpeg" />
+            </div>
+            <h1>หนังสือการ์ตูน</h1>
+        </div>
+        <div class="e-book" onclick="Novel()">
+            <div class="image-container">
+                <img src="~/Content/Section/e-book-section.jpg" />
+            </div>
+            <h1>หนังสือนิยาย</h1>
+        </div>
+        <div class="promotion" onclick="Children()">
+            <div class="image-container">
+                <img src="~/Content/Section/promotion-section.png" />
+            </div>
+            <h1>หนังสือเด็ก</h1>
+        </div>
+        <div class="sale-book" onclick="study()">
+            <div class="image-container">
+                <img src="~/Content/Section/sale-section.jpg" />
+            </div>
+            <h1>หนังสือเรียน</h1>
+        </div>
+
+
+    </section>
+
+
+    <h3>หนังสือทั้งหมด</h3>
+    <hr />
+    <div class="container">
+        <!-- loop แสดงรายการหนังสือ-->
+
+        @for (var i = 1; i <= Model.ToList().Count(); i++)
+        {
+            var indexItem = i - 1;
+            if (i == 1 || i % 4 == 1)
+            {
+
+                @:<div class="row">
+                }
+
+
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <div class="b" data-book-id="@Model.ElementAt(indexItem).Book_Id" data-book-name="@Model.ElementAt(indexItem).Book_Name" data-price="@Model.ElementAt(indexItem).Price" data-image="@Url.Content("~/Content/Book_Image/" + Model.ElementAt(indexItem).Image)">
+
+
+                            <a href="#" onclick="navigateToDetails(@Model.ElementAt(indexItem).Book_Id)">
+
+                                <img class="img-responsive" style="max-width: 70%;" src="@Url.Content("~/Content/Book_Image/" + (Model.ElementAt(indexItem).Image))" />
+
+                            </a>
+                            <div class="caption">
+                                <h4 style="font-weight:bold;"> @Model.ElementAt(indexItem).Book_Name </h4>
+                                <h5> โดย: @Model.ElementAt(indexItem).Author </h5>
+                                <h5>สำนักพิม: @Model.ElementAt(indexItem).Publisher </h5>
+                                <h5>ราคา: @Model.ElementAt(indexItem).Price </h5>
+                                <div style=" display: flex; justify-content: flex-end;">
+                                    <!-- เพิ่มสินค้าเข้าตะกร้า ไปที่ method  AddToCart หน้า cartcontroller -->
+
+                                    <a href="javascript:void(0);" onclick="addToCart(@Model.ElementAt(indexItem).Book_Id)" class="btn" style="background-color: #F7CD81; border-radius: 14px; text-decoration: none; color: #3F3F3F;">
+                                        <h5 class="non-link">เพิ่มเข้าตระกร้า</h5>
+                                    </a>
+
+                                </div>
+
+                            </div>
+                            <!-- Your book content here -->
+                        </div>
+                    </div>
+                </div>
+
+                if (i % 4 == 0)
+                {
+                @:</div>
+            }
+
+        }
+
+
+
+
+    </div>
+
+
+
+    <script>
+    function navigateToDetails(bookId) {
+        window.location.href = '@Url.Action("Details", "Home")/' + bookId;
+    }
+         function Cartoon() {
+        window.location.href = '@Url.Action("Cartoon", "Home")/';
+        }
+        function Novel() {
+        window.location.href = '@Url.Action("Novel", "Home")/';
+        }
+
+        function Children() {
+        window.location.href = '@Url.Action("Children", "Home")/';
+        }
+
+        function study() {
+        window.location.href = '@Url.Action("study", "Home")/';
+    }
+    </script>
+    <script>
+    function addToCart(bookID) {
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Cart")',
+            type: 'POST',
+            data: { bookID: bookID },
+            success: function(result) {
+                // ทำอะไรก็ตามที่คุณต้องการหลังจากเพิ่มสินค้าลงในตะกร้า
+                alert('เพิ่มเข้าตระกร้าสำเร็จ');
+            },
+            error: function() {
+                alert('ขออภัย เราไม่สามารถเพิ่มเข้าตระกร้าได้');
+            }
+        });
+    }
+    </script>
+
+
+
+
+</body>
+
+
+</html>
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts\Advert\AdvertSlide.js"></script>
+}

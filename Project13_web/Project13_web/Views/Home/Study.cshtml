@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Project13_web.Models.Book>
+
+@{
+    ViewBag.Title = "Study";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <style>
+        body {
+            margin-top: 80px;
+        }
+        .topic {
+            display: flex;
+            justify-content: start;
+            margin: 20px;
+            height: 60px;
+            align-items: center;
+        }
+
+            .topic h1 {
+                background-color: #F7CD81;
+                padding: 10px;
+                border-radius: 10px;
+                color: #5B584F;
+            }
+    </style>
+</head>
+<body>
+    <div class="topic">
+        <h1>หนังสือเรียน</h1>
+    </div>
+    <hr />
+
+    <div class="container">
+        <!-- loop แสดงรายการหนังสือ-->
+
+        @for (var i = 1; i <= Model.ToList().Count(); i++)
+        {
+            var indexItem = i - 1;
+            if (i == 1 || i % 4 == 1)
+            {
+
+                @:<div class="row">
+                }
+
+
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <div class="b" data-book-id="@Model.ElementAt(indexItem).Book_Id" data-book-name="@Model.ElementAt(indexItem).Book_Name" data-price="@Model.ElementAt(indexItem).Price" data-image="@Url.Content("~/Content/Book_Image/" + Model.ElementAt(indexItem).Image)">
+
+
+                            <a href="#" onclick="navigateToDetails(@Model.ElementAt(indexItem).Book_Id)">
+
+                                <img class="img-responsive" style="max-width: 70%;" src="@Url.Content("~/Content/Book_Image/" + (Model.ElementAt(indexItem).Image))" />
+
+                            </a>
+                            <div class="caption">
+                                <h4 style="font-weight:bold;"> @Model.ElementAt(indexItem).Book_Name </h4>
+                                <h5> โดย: @Model.ElementAt(indexItem).Author </h5>
+                                <h5>สำนักพิม: @Model.ElementAt(indexItem).Publisher </h5>
+                                <h5>ราคา: @Model.ElementAt(indexItem).Price </h5>
+                                <div style=" display: flex; justify-content: flex-end;">
+                                    <!-- เพิ่มสินค้าเข้าตะกร้า ไปที่ method  AddToCart หน้า cartcontroller -->
+
+                                    <a href="javascript:void(0);" onclick="addToCart(@Model.ElementAt(indexItem).Book_Id)" class="btn" style="background-color: #F7CD81; border-radius: 14px; text-decoration: none; color: #3F3F3F;">
+                                        <h5 class="non-link">เพิ่มเข้าตระกร้า</h5>
+                                    </a>
+
+                                </div>
+
+                            </div>
+                            <!-- Your book content here -->
+                        </div>
+                    </div>
+                </div>
+
+                if (i % 4 == 0)
+                {
+                @:</div>
+            }
+
+        }
+
+
+
+
+    </div>
+
+
+
+    <script>
+    function navigateToDetails(bookId) {
+        window.location.href = '@Url.Action("Details", "Home")/' + bookId;
+    }
+    </script>
+    <script>
+    function addToCart(bookID) {
+        $.ajax({
+            url: '@Url.Action("AddToCart", "Cart")',
+            type: 'POST',
+            data: { bookID: bookID },
+            success: function(result) {
+                // ทำอะไรก็ตามที่คุณต้องการหลังจากเพิ่มสินค้าลงในตะกร้า
+                alert('เพิ่มเข้าตระกร้าสำเร็จ');
+            },
+            error: function() {
+                alert('ขออภัย เราไม่สามารถเพิ่มเข้าตระกร้าได้');
+            }
+        });
+    }
+    </script>
+
+</body>
+</html>

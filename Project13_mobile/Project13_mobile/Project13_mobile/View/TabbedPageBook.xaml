@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Project13_mobile.View.TabbedPageBook"
+            xmlns:local="clr-namespace:Project13_mobile.View"
+            NavigationPage.HasNavigationBar="False"
+            BarBackground="#D1C4A2"
+            SelectedTabColor="Black"
+            
+            >
+  <!--Pages can be added as references or inline-->
+    <NavigationPage Title="หน้าหลัก"  BarBackgroundColor="#D1C4A2">
+        <x:Arguments >
+            <local:BookPage/>
+        </x:Arguments>
+
+    </NavigationPage>
+    <NavigationPage Title="ออกจากระบบ" BarBackgroundColor="#D1C4A2">
+        <x:Arguments>
+            <local:Logout/>
+        </x:Arguments>
+    </NavigationPage>
+
+</TabbedPage>

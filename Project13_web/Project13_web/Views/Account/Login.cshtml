@@ -1,0 +1,124 @@
+﻿@using Project13_web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <style>
+        body {
+            margin-top: 40px;
+            overflow: hidden;
+            /*background-image: url('../../Content/Logo/background.jpg');*/
+        }
+
+        h2 {
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+        }
+
+        h5 {
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+        }
+
+        .col-md-offset-2 {
+            display: flex;
+            justify-content: center;
+        }
+
+        .col-md-8 {
+            display: flex;
+            justify-content: center;
+            border: 1px solid #000000;
+            text-align: center;
+        }
+
+        .form-group, .form-group .col-md-10 {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-control {
+            margin-left: 15px;
+        }
+
+        .col-md-8 h5 {
+            text-align: center;
+        }
+
+        .frame {
+            margin: 150px 0 0 320px;
+            background: #ffffff;
+            width: 500px;
+            height: 500px;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            border-radius: 20px;
+            border: 1px solid #000000;
+            filter: drop-shadow(15px 15px 4px rgba(0, 0, 0, 0.5));
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+
+
+        <div class="row">
+
+            <section id="loginForm">
+
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <h2>เข้าสู่ระบบ</h2>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" value="เข้าสู่ระบบ" class="btn btn-warning" />
+
+                    </div>
+                    <h5>
+                        @Html.ActionLink("ยังไม่มีบัญชีผู้ใช้โปรดสมัครสมาชิก", "Register")
+                    </h5>
+
+                }
+            </section>
+        </div>
+
+
+    </div>
+
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

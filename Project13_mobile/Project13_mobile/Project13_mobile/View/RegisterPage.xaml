@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Project13_mobile.ViewModels"
+             x:Class="Project13_mobile.View.RegisterPage"
+              NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#D1C4A2">
+    <ContentPage.BindingContext>
+        <local:RegisterViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="Logo_mobile.png" HeightRequest="300"></Image>
+
+            <Entry Text="{Binding register.Email}" Placeholder="กรอกอีเมลล์" ></Entry>
+            <Entry Text="{Binding register.Password}" Placeholder="กรอกรหัสผ่าน"></Entry>
+            <Entry Text="{Binding register.ConfirmPassword}" Placeholder="ยืนยันรหัสผ่าน"></Entry>
+            <Button Text="Register" FontSize="Large"  BackgroundColor="#ECB552" TextColor="White" Command="{Binding RegisterCommand}"></Button>
+            <Label Text="คุณมีบัญชีอยู่แล้ว? กรุณาเข้าสู่ระบบ"  FontSize="Small" HorizontalOptions="Center" TextColor="#4F3422" >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

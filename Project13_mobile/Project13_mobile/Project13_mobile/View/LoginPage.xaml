@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Project13_mobile.ViewModels"
+             x:Class="Project13_mobile.View.LoginPage"
+              NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#D1C4A2">
+    <ContentPage.BindingContext>
+        <local:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Image Source="Logo_mobile.png" HeightRequest="300"></Image>
+            
+                <Entry Text="{Binding login.Email}" Placeholder="กรอกอีเมลล์" ></Entry>
+            
+            
+            <Entry Text="{Binding login.Password}" Placeholder="กรอกรหัสผ่าน"></Entry>
+            <Button Text="Login" FontSize="Large"  BackgroundColor="#ECB552" TextColor="White" Command="{Binding LoginCommand}" BorderColor="White" CornerRadius="10"></Button>
+            <Label Text="คุณยังไม่มีบัญชี? กรุณาสมัครสมาชิก"  FontSize="Small" HorizontalOptions="Center" TextColor="#4F3422" >
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RegisterCommand}"></TapGestureRecognizer>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

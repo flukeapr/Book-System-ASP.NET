@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Project13_mobile.ViewModels"
+             x:Class="Project13_mobile.View.AddBookPage"
+             >
+    <ContentPage.BindingContext>
+        <local:AddBokViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout >
+            <Label Text="เพิ่มหนังสือใหม่" HorizontalOptions="CenterAndExpand" FontSize="Large" FontAttributes="Bold" TextColor="#301707"/>
+            <Entry Text="{Binding BookName}" Placeholder="ชื่อหนังสือ" FontFamily="Arial" Keyboard="Text"></Entry>
+            <Entry Text="{Binding Category}" Placeholder="ประเภทหนังสือ" FontFamily="Arial" Keyboard="Text"></Entry>
+            <Entry Text="{Binding ShortDescription}" Placeholder="เรื่องสั้น" FontFamily="Arial" Keyboard="Text"></Entry>
+            <Entry Text="{Binding Author}" Placeholder="ผู้เขียน" FontFamily="Arial" Keyboard="Text"></Entry>
+            <Entry Text="{Binding Publisher}" Placeholder="สำนักพิมพ์" FontFamily="Arial" Keyboard="Text"></Entry>
+            <Entry Text="{Binding Price}" Placeholder="ราคา" Keyboard="Numeric"></Entry>
+            <Entry Text="{Binding Image}" Placeholder="รูป"></Entry>
+            <Button Text="บันทึกข้อมูล" Command="{Binding AddCommand}" CornerRadius="10" BackgroundColor="#ECB552" FontSize="Large"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

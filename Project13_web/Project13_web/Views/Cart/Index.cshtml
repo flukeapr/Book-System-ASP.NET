@@ -1,0 +1,99 @@
+﻿@using Project13_web.Models
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <style>
+        body {
+            margin-top: 50px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h4 {
+            background-color: #F7CD81;
+            width: 200px;
+            padding: 10px 10px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #3F3F3F;
+        }
+    </style>
+</head>
+<body>
+    @if (Session["cart"] == null)
+    {
+
+        <div class="top">
+            <h2>ไม่มีสินค้าในตะกร้า</h2>
+            <a href="@Url.Action("OrderList","Home")" class="order" style="text-decoration: none;"><h4>รายกาารสั่งซื้อ</h4></a>
+        </div>
+
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>รูปหนังสือ</th>
+                <th>ชื่อหนังสือ</th>
+                <th>ราคาต่อชิ้น</th>
+                <th>จำนวน</th>
+                <th>ราคาทั้งหมด</th>
+
+            </tr>
+        </table>
+
+    }
+    else
+    {
+        <div class="top">
+            <h2>สินค้าในตะกร้า</h2>
+            <a href="@Url.Action("OrderList","Home")" class="order" style="text-decoration: none;"><h4>รายกาารสั่งซื้อ</h4></a>
+        </div>
+
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>รูปหนังสือ</th>
+                <th>ชื่อหนังสือ</th>
+                <th>ราคาต่อชิ้น</th>
+                <th>จำนวน</th>
+                <th>ราคาทั้งหมด</th>
+
+            </tr>
+            @foreach (var item in (List<Item>)Session["cart"])
+            {
+
+                <tr>
+                    <td>
+                        <img src="~/Content/Book_Image/@item.Book.Image" alt="@item.Book.Book_Name" style="width:100px;height: auto" />
+                    </td>
+                    <td>@item.Book.Book_Name</td>
+                    <td>@item.Book.Price</td>
+                    <td>@item.Quanity</td>
+                    <td>฿@(item.Book.Price * item.Quanity)</td>
+                    <td>
+                        <a href="@Url.Action("RemoveFromCart", "Cart", new{ @bookID = item.Book.Book_Id})" class="btn btn-danger">ลบออกจากตระกร้า</a>
+                    </td>
+
+                </tr>
+            }
+            <tr>
+                <td colspan="5"> <h2 class="text-center">ราคาสิ้นค้าทั้งหมด</h2></td>
+                <td>
+                    @{
+                        List<Item> cart = (List<Item>)Session["cart"];
+                        var total = (from data in cart
+                                     select data.Book.Price * data.Quanity).Sum();
+                    }
+                    <h3>฿@total</h3><a href="@Url.Action("Payment")" class="btn btn-success">สั่งซื้อ</a>
+                </td>
+            </tr>
+
+        </table>
+    }
+</body>
+</html>

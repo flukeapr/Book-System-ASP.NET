@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Project13_mobile.ViewModels"
+             x:Class="Project13_mobile.View.BookPage"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.BindingContext>
+        <local:BookViewModel/>
+    </ContentPage.BindingContext>
+   
+    <ContentPage.Content>
+        <StackLayout >
+
+            <StackLayout Orientation="Horizontal" Margin="10">
+                <Button Text="เพิ่มหนังสือ" Command="{Binding NextPageCommand}" FontSize="Large"  BackgroundColor="#ECB552" TextColor="White" CornerRadius="10"></Button>
+            </StackLayout>
+            
+            <CollectionView ItemsSource="{Binding book}" SelectionMode="Single" SelectedItem="{Binding selectBook}" SelectionChangedCommand="{Binding SelectCommand}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                            <RowDefinition Height="20"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image HeightRequest="200" WidthRequest="200"  Grid.RowSpan="5" Source="{Binding Image}" Margin="0,10,0,0"/>
+
+                        <Label Grid.Column="1" Grid.Row="0" Text="{Binding Book_Name}" />
+                        <Label Grid.Column="1" Grid.Row="1" Text="{Binding Author}" />
+                        <Label Grid.Column="1" Grid.Row="2" Text="{Binding Publisher} "/>
+                        <Label Grid.Row="3" Grid.Column="1" Text="{Binding Price}" TextColor="Red" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </StackLayout>
+    </ContentPage.Content>
+   
+</ContentPage>   

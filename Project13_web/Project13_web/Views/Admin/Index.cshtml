@@ -1,0 +1,160 @@
+﻿@model IEnumerable<Project13_web.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        body {
+            margin-top: 60px;
+        }
+
+        .text-left {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .table {
+            margin-top: 10px;
+        }
+
+        .Search-Admin {
+            align-items: center;
+            display: flex;
+        }
+
+            .Search-Admin input {
+                border-radius: 10px;
+                width: 300px;
+                height: 40px;
+                border: 1px solid black;
+            }
+
+            .Search-Admin button {
+                height: 40px;
+                border: none;
+                background: transparent;
+                cursor: pointer;
+            }
+
+        .table td, th {
+            white-space: nowrap; /* Prevent text from wrapping */
+            overflow: hidden; /* Hide content that overflows the cell */
+            text-overflow: ellipsis;
+        }
+
+        .table th {
+            max-width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top">
+        <div class="row">
+            <div class="text-left">
+                <button class="btn" style="background-color: #F89E6C; border-radius: 10px; border: 1px solid #5B584F; color: #3F3F3F; font-weight: bold;">
+                    @Html.ActionLink("เพิ่มหนังสือใหม่", "Create", null, new { style = "color: #3F3F3F; text-decoration: none;" })
+                </button>
+                @using ((Html.BeginForm()))
+                {
+                    <div class="Search-Admin">
+                        @Html.TextBox("SearchString", null, new { @placeholder = "ค้นหาหนังสือ" })
+                        <button type="submit" value="Search"><box-icon name='search'></box-icon></button>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Short_Story)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="max-width:130px;">
+                    @Html.DisplayFor(modelItem => item.Book_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td style="max-width:130px;">
+                    @Html.DisplayFor(modelItem => item.Short_Story)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Publisher)
+                </td>
+                <td>
+                    <label style="color:red">
+                        @Html.DisplayFor(modelItem => item.Price) ฿
+                    </label>
+
+                </td>
+                <td>
+
+                    <img src=@Url.Content("~/Content/Book_Image/" + (item.Image)) style="width: 100px;height: auto" />
+                </td>
+                <td>
+
+                    <a href="@Url.Action("Edit", "Admin", new { id = item.Book_Id })" class="btn btn-warning">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAANpJREFUSEu9lOERwiAMhfM20U10E7uJTqKb6CZ2k+elBx6HBEJL7V/g+8hLCmTnDzvzZZOA5CVc8AVgLl12lYDkQUTuInIKUIWfS5JuQQaPt1ZhUdIlyOEAjloBybeIqGQC8EijcgusWAIsxnUFcOsWNGLRaLQXc6yoS+CIRXlFuC5UI6rA0yky4VXBCLgpGAUvCkbCLcEznwpL6nnHfppMkosZWNa2wK0KvoKt8KogK786irWozIiSQ6vhzR/N08TWHvdj1wJZ656Iuthx+uKh/wu6ruvYvHsPPiiqixl/L930AAAAAElFTkSuQmCC" />
+                    </a> |
+                    <a href="@Url.Action("Details", "Admin", new { id = item.Book_Id })" class="btn btn-info">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAKRJREFUSEvtVdsNwyAMvNuk3SSdLMokXYVNkk2uIhJJgxphAY7yUX4sgX2H34TzoTM+riOQNAAYAUTZcgKAiWSUuweSZgCPFuQv20DylRNovSCbwibpgLOB5Q+1npgJkqKVKHl+HwLrz3M9swfuBP8cpKq6Xx+UOt1cRWdJ7kbgXqYeBD3H9ULymY/ruGjeHXbC74VTG5KSXdNyKYEfQmRRrtH5AFnxnhkw1dnlAAAAAElFTkSuQmCC" />
+                    </a> |
+                    <a href="@Url.Action("Delete", "Admin", new { id = item.Book_Id })" class="btn btn-danger">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALBJREFUSEvtldENgzAMRO82KZuUUTpJR2EUGIVNjIIUKU2I7SaN+kP+wNjvzlYwMfhwcH2oABF5AlgAPCpCdgAvkltNqAVYAQSIdnaSUytAQiLJSyEiosbPXE2aVcCKF4CY0Dv41PGHg+GAqNxjPXWpfd88vJ8CcoXWcwp3ObAKdrfoBhT36tuW3DMwf03dLbIILQDPosm5G8k5f1m7yWGLvR3bLNarrs7/Ln2r9574AdxozhlwDkgoAAAAAElFTkSuQmCC" />
+                    </a>
+
+                </td>
+            </tr>
+        }
+
+    </table>
+    <script>
+    function navigateToDetails(bookId) {
+        window.location.href = '@Url.Action("Details", "Admin")/' + bookId;
+    }
+    </script>
+</body>
+</html>

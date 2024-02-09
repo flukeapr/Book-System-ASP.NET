@@ -1,0 +1,70 @@
+﻿@using Microsoft.AspNet.Identity
+
+<head>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+    <style>
+        .navbar-right {
+            display: flex;
+            position: absolute;
+            top: 20%;
+            left: 64%;
+            font-size: 15px;
+        }
+
+            .navbar-right li {
+                display: flex;
+                align-items: center;
+            }
+
+        .nav-login {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()<ul class="nav navbar-nav navbar-right">
+    @if (User.IsInRole("ADMIN"))
+    {
+        <li>
+            @Html.ActionLink("Console", "Main", "Admin", routeValues: null, htmlAttributes: new { title = "Manage" })
+        </li>
+
+    }
+    else
+    {
+        <li>
+            <a href="@Url.Action("Index","Cart")">
+                <img src="~/Content/Logo/icons-basket.png" />
+            </a>
+        </li>
+    }
+
+    <li>
+        @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">LogOff</a></li>
+</ul>
+    }
+}
+else
+{
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <a href="@Url.Action("Index","Cart")">
+            <img src="~/Content/Logo/icons-basket.png" />
+        </a>
+    </li>
+    
+    <li>@Html.ActionLink("เข้าสู่ระบบ/สมัครสมาชิก", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+</ul>
+}

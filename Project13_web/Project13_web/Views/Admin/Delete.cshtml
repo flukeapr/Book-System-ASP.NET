@@ -1,0 +1,113 @@
+﻿@model Project13_web.Models.Book
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <style>
+        body {
+            margin-top: 100px;
+        }
+
+        h2 {
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .button {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .btn-danger {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>ลบหนังสือ</h2>
+    <div>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Book_Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Book_Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Category)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Category)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Short_Story)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Short_Story)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Author)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Author)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Publisher)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Publisher)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
+
+            <dd>
+                <img src=@Url.Content("~/Content/Book_Image/"+(Model.Image)) style="width:200px;height: auto" />
+            </dd>
+
+        </dl>
+        <div class="button">
+            <button class="btn btn-warning">
+                @Html.ActionLink("ย้อนกลับ", "Index", null, new { style = "color: white; text-decoration: none;" })
+            </button>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="ลบ" class="btn btn-danger" />
+
+                </div>
+
+
+            }
+        </div>
+    </div>
+
+</body>
+</html>

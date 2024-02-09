@@ -1,0 +1,178 @@
+﻿@model Project13_web.Models.CustomerIndexData
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        body {
+            margin-top: 60px;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+
+        .book {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .topic {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+            height: 60px;
+            align-items: center;
+        }
+
+            .topic h1 {
+                background-color: #F7CD81;
+                padding: 10px;
+                border-radius: 10px;
+                color: #5B584F;
+            }
+    </style>
+</head>
+<body>
+    <div class="orderPage">
+        <div class="topic">
+            <h1>รายการหนังสือทั้งหมด</h1>
+        </div>
+        
+        <div class="book">
+
+            <table class="table">
+                <tr>
+
+
+                    <th>
+                        ชื่อหนังสือ
+                    </th>
+
+                    <th>
+                        ราคา
+                    </th>
+
+
+                    <th></th>
+                </tr>
+                @if (Model.books != null)
+                {
+                    foreach (var item in Model.books)
+                    {
+                        <tr>
+
+
+                            <td>
+                                <h4>@Html.DisplayFor(model => item.Book_Name)</h4>
+
+                            </td>
+
+                            <td style="color:red;">
+                                @Html.DisplayFor(modelItem => item.Price) ฿
+                            </td>
+
+
+
+                            <td>
+                                @Html.ActionLink("เลือก", "Order", new { bookId = item.Book_Id }, new { @class = "btn btn-info" })
+                            </td>
+                        </tr>
+                    }
+                }
+
+
+            </table>
+        </div>
+
+        <div class="order" style="margin-left:20px;">
+            <div class="topic">
+                <h1>รายการสั่งซื้อหนังสือทั้งหมด</h1>
+            </div>
+            
+            <table class="table">
+                <tr>
+
+                    <th>
+                        รหัสหนังสือ
+                    </th>
+                    <th>
+                        ชื่อหนังสือ
+                    </th>
+                    <th>
+                        จำนวน
+                    </th>
+                    <th>
+                        ราคา
+                    </th>
+                    <th>
+                        อีเมลล์ผู้รับ
+                    </th>
+                    <th>
+                        ชื่อผู้รับ
+                    </th>
+                    <th>
+                        ที่อยู่
+                    </th>
+                    <th>
+                        เบอร์โทรศัพท์
+                    </th>
+                    <th>
+                        ช่องทางชำระเงิน
+                    </th>
+                    <th></th>
+                </tr>
+                @if (Model.orders != null)
+                {
+                    foreach (var item in Model.orders)
+                    {
+                        <tr>
+
+                            <td>
+                                @Html.DisplayFor(model => item.book_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Book_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.quanity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.total) ฿
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.userEmail)
+                            </td>
+                            <td>
+
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.pay_select)
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                }
+
+
+            </table>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

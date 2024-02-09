@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <style>
+        body {
+            margin-top: 100px;
+            display: flex;
+        }
+
+        .item ul {
+            display: flex;
+            justify-content: space-around;
+            height: 500px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .management {
+            width: 200px;
+            height: 200px;
+            background: #F7CD81;
+            /*background-image: url('../../Content/Logo/BOOK_EDITING.jpg');*/
+            background-size: cover;
+            filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.5));
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+            .management a {
+                text-decoration: none;
+                color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 200px;
+            }
+
+        .order {
+            width: 200px;
+            height: 200px;
+            background: #F7CD81;
+            filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.5));
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+            .order a {
+                text-decoration: none;
+                color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 200px;
+            }
+
+        .report {
+            width: 200px;
+            height: 200px;
+            background: #F7CD81;
+            filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.5));
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+            .report a {
+                text-decoration: none;
+                color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 200px;
+            }
+
+        .item .management:hover {
+        }
+    </style>
+</head>
+<body>
+    <div class="item">
+        <ul>
+            <li>
+                <div class="management">
+
+                    <a href="@Url.Action("Index","Admin")"><h2>จัดการหนังสือ</h2></a>
+                </div>
+
+
+            </li>
+            <li>
+                <div class="order">
+
+                    <a href="@Url.Action("Order","Admin")"><h2>รายการสั่งซื้อ</h2></a>
+                </div>
+            </li>
+            <li>
+                <div class="report">
+
+                    <a href="@Url.Action("ReportAdmin","Admin")"><h2>รายงาน</h2></a>
+                </div>
+            </li>
+        </ul>
+
+
+    </div>
+
+</body>
+</html>

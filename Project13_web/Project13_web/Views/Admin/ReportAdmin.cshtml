@@ -1,0 +1,191 @@
+﻿@model IEnumerable<Project13_web.Models.Order>
+
+@{
+    ViewBag.Title = "ReportAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.HideElement = true;
+}
+<html>
+<head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawBarChart();
+            drawPieChart();
+        }
+
+        function drawBarChart() {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/GetReportJson',
+                success: function (chartsdata) {
+                    var Data = chartsdata.JSONList;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Book_Name');
+                    data.addColumn('number', 'จำนวนการสั่งซื้อ');
+
+                    var Book_NameCounts = {};
+                    for (var i = 0; i < Data.length; i++) {
+                        var Book_Name = Data[i].Book_Name;
+                        Book_NameCounts[Book_Name] = (Book_NameCounts[Book_Name] || 0) + 1;
+                    }
+
+                    for (var Book_Name in Book_NameCounts) {
+                        var Count = Book_NameCounts[Book_Name];
+                        data.addRow([Book_Name, Count]);
+                    }
+
+                    var options = {
+                        title: 'จำนวนการสั่งซื้อหนังสือแต่ละเล่ม',
+                        is3D: false,
+
+                    };
+
+                    var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+                    chart.draw(data, options);
+                }
+            });
+        }
+
+        function drawPieChart() {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/GetReportJson',
+                success: function (chartsdata) {
+                    var Data = chartsdata.JSONList;
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Book_Cat');
+                    data.addColumn('number', 'จำนวนประเถทหนังสือที่ถูกสั่งซื้อ');
+
+                    var Book_CatCounts = {};
+                    for (var i = 0; i < Data.length; i++) {
+                        var Book_Cat = Data[i].Book_Cat;
+                        Book_CatCounts[Book_Cat] = (Book_CatCounts[Book_Cat] || 0) + 1;
+                    }
+
+                    for (var Book_Cat in Book_CatCounts) {
+                        data.addRow([Book_Cat, Book_CatCounts[Book_Cat]]);
+                    }
+
+                    var options = {
+                        title: 'ประเภทหนังสือทีถูกสั่งซื้อ',
+                        pieSliceText: 'value',
+                        font: '70px'
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                    chart.draw(data, options);
+                }
+            });
+        }
+
+    </script>
+    <style>
+        body {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .topic {
+            display: flex;
+            justify-content:center;
+            margin: 20px;
+            
+            height: 60px;
+            
+            align-items:center;
+        }
+            .topic h1 {
+                background-color: #F7CD81;
+                padding: 10px;
+                border-radius: 10px;
+                color: #5B584F;
+            }
+        .chart {
+            border: 1px solid #808080;
+        }
+
+        .table tr td {
+            border: 1px solid #808080;
+        }
+        .excel{
+            display:flex;
+            justify-content:end;
+            align-items:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="topic">
+        <h1>รายงานการสั่งซื้อ</h1>
+    </div>
+    @if (Model != null)
+    {
+        <div class="excel">
+            <h4>Export Excel</h4>
+            <a href="@Url.Action("ExportToExcel", "Admin", new { @class = "btn btn-success" })">
+                <img src="~/Content/Logo/excel.png" style="width:50px; height:50px;" />
+            </a>
+        </div>
+
+        <div>
+            <table class="table">
+                <tr style="background-color: rgb(223, 191, 159)">
+                    <th style="width:400px;"><h4>รายการหนังสือ</h4></th>
+                    <th style="width: 400px;display:flex; align-items: center;"><h4>จำนวน/เล่ม</h4></th>
+                    <th><h4>ราคารวม/บาท</h4></th>
+                </tr>
+
+                @{
+                    var groupedBooks = Model.GroupBy(x => x.Book_Name)
+                                  .Select(group => new
+                                  {
+                                      BookName = group.Key,
+                                      TotalQuantity = group.Sum(x => x.quanity),
+                                      Total = group.Sum(x => x.total)
+
+                                  })
+                                  .ToList();
+
+                }
+                @foreach (var book in groupedBooks)
+                {
+                    <tr>
+                        <td>@book.BookName</td>
+                        <td>@book.TotalQuantity </td>
+                        <td>@book.Total </td>
+                    </tr>
+
+
+                }
+                <tr>
+                    <td colspan="2"> <h2 class="text-center">ราคาสิ้นค้าทั้งหมด</h2></td>
+                    <td>
+                        @{
+
+                            var total = (from b in Model
+                                         select b.total).Sum();
+                        }
+                        <h3 style="color:red;">฿ @total บาท</h3>
+                    </td>
+                </tr>
+
+            </table>
+        </div> }
+    else
+    {
+        <p>No data available</p>
+    }
+    <div class="topic">
+        <h1>กราฟการสั่งซื้อของแต่ละประเภทหนังสือ</h1>
+    </div>
+    <div class="chart">
+
+        <div id="piechart" style="width: 1000px; height: 500px;"></div>
+    </div>
+</body>
+</html>

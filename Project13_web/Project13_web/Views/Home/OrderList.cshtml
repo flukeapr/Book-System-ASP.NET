@@ -1,0 +1,85 @@
+﻿﻿@model List<Project13_web.Models.OrderViewModel>
+@{
+    ViewBag.Title = "OrderList";
+    ViewBag.HideElement = true;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<html>
+<head>
+    <style>
+        body {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>รายการคำสั่งซื้อ</h1>
+   
+    <table class="table">
+        <tr>
+            <th>
+                รูปภาพ
+            </th>
+
+            <th>
+                ชื่อหนังสือ
+            </th>
+            <th>
+                จำนวน
+            </th>
+            <th>
+                ราคา
+            </th>
+            <th>
+                ช่องทางชำระเงิน
+            </th>
+            <th>
+                ชื่อผู้รับ
+            </th>
+            <th>
+                ที่อยู่
+            </th>
+            <th>
+                เบอร์โทรศัพท์
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            <img src="@Url.Content("~/Content/Book_Image/"+(item.book_img))" style="width:100px;height: auto" />
+        </td>
+
+        <td>
+            @item.book_name
+        </td>
+        <td>
+            @item.quantity
+        </td>
+        <td>
+            @item.total
+        </td>
+
+        <td>
+            @item.pay_method
+        </td>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Address
+        </td>
+        <td>
+            @item.Phone
+        </td>
+
+    </tr>
+        }
+
+    </table>
+</body>
+</html>
+
